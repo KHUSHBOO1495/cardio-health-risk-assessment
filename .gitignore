@@ -9,7 +9,6 @@ venv/
 
 # FastAPI / ML
 backend/__pycache__/
-backend/saved_models/*.pkl
 backend/data/*.csv
 
 # Node / Next.js
