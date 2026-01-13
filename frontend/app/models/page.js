@@ -16,17 +16,20 @@ import {
   Activity,
   Calendar,
   Layers,
-  Target
+  Target,
+  Grid3x3
 } from "lucide-react";
 import styles from "./page.module.css";
 
 export default function Models() {
   const [metrics, setMetrics] = useState(null);
+  const [confusionMatrix, setConfusionMatrix] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchMetrics();
+    fetchConfusionMatrix();
   }, []);
 
   const fetchMetrics = async () => {
@@ -35,6 +38,17 @@ export default function Models() {
       if (!response.ok) throw new Error("Failed to fetch metrics");
       const data = await response.json();
       setMetrics(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const fetchConfusionMatrix = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/confusion-matrix");
+      if (!response.ok) throw new Error("Failed to fetch confusion matrix");
+      const data = await response.json();
+      setConfusionMatrix(data);
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -298,6 +312,132 @@ export default function Models() {
                 </div>
               </div>
             </div>
+
+            {/* Confusion Matrix Section */}
+            {confusionMatrix && (
+              <div className={styles.confusionMatrixSection}>
+                <h3 className={styles.sectionTitle}>
+                  <Grid3x3 className={styles.titleIcon} size={24} />
+                  Classification Results
+                </h3>
+                <p className={styles.sectionDescription}>
+                  Performance analysis of predicted vs actual labels
+                </p>
+                
+                {/* First 50 Samples */}
+                <div className={styles.confusionMatrixCard}>
+                  <h4 className={styles.confusionMatrixSubtitle}>First 50 samples</h4>
+                  <div className={styles.confusionMatrixMetrics}>
+                    <div className={styles.confusionMetric}>
+                      <span className={styles.confusionMetricLabel}>Accuracy</span>
+                      <span className={styles.confusionMetricValue}>
+                        {confusionMatrix.first_50_samples.accuracy}%
+                      </span>
+                    </div>
+                    <div className={styles.confusionMetric}>
+                      <span className={styles.confusionMetricLabel}>Precision</span>
+                      <span className={styles.confusionMetricValue}>
+                        {confusionMatrix.first_50_samples.precision}%
+                      </span>
+                    </div>
+                    <div className={styles.confusionMetric}>
+                      <span className={styles.confusionMetricLabel}>Recall</span>
+                      <span className={styles.confusionMetricValue}>
+                        {confusionMatrix.first_50_samples.recall}%
+                      </span>
+                    </div>
+                    <div className={styles.confusionMetric}>
+                      <span className={styles.confusionMetricLabel}>F1 Score</span>
+                      <span className={styles.confusionMetricValue}>
+                        {confusionMatrix.first_50_samples.f1_score}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.confusionMatrixGrid}>
+                    <div className={styles.gridHeader}>
+                      <div className={styles.gridHeaderCell}>PREDICTED</div>
+                      <div className={styles.gridHeaderSubrow}>
+                        <div>Class 0</div>
+                        <div>Class 1</div>
+                      </div>
+                    </div>
+                    
+                    <div className={styles.gridContent}>
+                      <div className={styles.gridActualLabel}>ACTUAL</div>
+                      <div className={styles.gridRows}>
+                        <div className={styles.gridRow}>
+                          <div className={styles.gridRowLabel}>Class 0</div>
+                          <div className={`${styles.confusionMatrixValue} ${styles.trueNegative}`}>
+                            <div className={styles.confusionMatrixNumber}>
+                              {confusionMatrix.first_50_samples.confusion_matrix[0][0]}
+                            </div>
+                            <div className={styles.confusionMatrixLabel}>TRUE NEG</div>
+                            <span className={styles.confusionMatrixPercentage}>
+                              {((confusionMatrix.first_50_samples.confusion_matrix[0][0] / 50) * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                          <div className={`${styles.confusionMatrixValue} ${styles.falsePositive}`}>
+                            <div className={styles.confusionMatrixNumber}>
+                              {confusionMatrix.first_50_samples.confusion_matrix[0][1]}
+                            </div>
+                            <div className={styles.confusionMatrixLabel}>FALSE POS</div>
+                            <span className={styles.confusionMatrixPercentage}>
+                              {((confusionMatrix.first_50_samples.confusion_matrix[0][1] / 50) * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className={styles.gridRow}>
+                          <div className={styles.gridRowLabel}>Class 1</div>
+                          <div className={`${styles.confusionMatrixValue} ${styles.falseNegative}`}>
+                            <div className={styles.confusionMatrixNumber}>
+                              {confusionMatrix.first_50_samples.confusion_matrix[1][0]}
+                            </div>
+                            <div className={styles.confusionMatrixLabel}>FALSE NEG</div>
+                            <span className={styles.confusionMatrixPercentage}>
+                              {((confusionMatrix.first_50_samples.confusion_matrix[1][0] / 50) * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                          <div className={`${styles.confusionMatrixValue} ${styles.truePositive}`}>
+                            <div className={styles.confusionMatrixNumber}>
+                              {confusionMatrix.first_50_samples.confusion_matrix[1][1]}
+                            </div>
+                            <div className={styles.confusionMatrixLabel}>TRUE POS</div>
+                            <span className={styles.confusionMatrixPercentage}>
+                              {((confusionMatrix.first_50_samples.confusion_matrix[1][1] / 50) * 100).toFixed(1)}%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.confusionMatrixLegend}>
+                    <div className={styles.legendItem}>
+                      <span className={`${styles.legendColor} ${styles.trueNegative}`}></span>
+                      <span>True Neg (No Cardio)</span>
+                    </div>
+                    <div className={styles.legendItem}>
+                      <span className={`${styles.legendColor} ${styles.falsePositive}`}></span>
+                      <span>False Pos</span>
+                    </div>
+                    <div className={styles.legendItem}>
+                      <span className={`${styles.legendColor} ${styles.falseNegative}`}></span>
+                      <span>False Neg</span>
+                    </div>
+                    <div className={styles.legendItem}>
+                      <span className={`${styles.legendColor} ${styles.truePositive}`}></span>
+                      <span>True Pos (Cardio)</span>
+                    </div>
+                  </div>
+                  
+                  <p className={styles.confusionMatrixNote}>
+                    Here class 0 Means No Cardio, 1 Means Cardio
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

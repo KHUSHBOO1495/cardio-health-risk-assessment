@@ -441,6 +441,256 @@
   color: #721c24;
 }
 
+/* Confusion Matrix Section */
+.confusionMatrixSection {
+  margin-bottom: 40px;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 16px;
+}
+
+.sectionDescription {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  margin-top: -10px;
+}
+
+.confusionMatrixCard {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.confusionMatrixSubtitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.confusionMatrixMetrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.confusionMetric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.confusionMetricLabel {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.confusionMetricValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.confusionMatrixGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0 auto 20px;
+  max-width: 1000px;
+}
+
+.gridHeader {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.gridHeaderCell {
+  text-align: center;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.gridHeaderSubrow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  font-weight: 600;
+  color: #667eea;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-left: 180px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+}
+
+.gridHeaderSubrow div {
+  padding: 0;
+}
+
+.gridContent {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.gridActualLabel {
+  width: 100px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding-top: 100px;
+}
+
+.gridRows {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gridRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  position: relative;
+}
+
+.gridRowLabel {
+  position: absolute;
+  left: -120px;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 0.9rem;
+  width: 100px;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gridRowLabel {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #667eea;
+  font-size: 0.85rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.confusionMatrixValue {
+  padding: 40px 20px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  margin: 8px;
+}
+
+.confusionMatrixNumber {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.confusionMatrixLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.confusionMatrixPercentage {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.trueNegative {
+  background: #27ae60;
+}
+
+.falsePositive {
+  background: #f39c12;
+}
+
+.falseNegative {
+  background: #e74c3c;
+}
+
+.truePositive {
+  background: #3498db;
+}
+
+.confusionMatrixLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 25px 0 15px;
+  justify-content: center;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.legendColor {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.confusionMatrixNote {
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
 /* CTA Section */
 .ctaSection {
   padding: 80px 20px;
