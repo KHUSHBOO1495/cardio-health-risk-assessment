@@ -103,6 +103,10 @@ def predict(data: PatientData):
         "risk_level": risk_level
     }
 
+@app.get("/")
+def read_root():
+    return {"message": "Hello World"}
+
 # ---------- MODEL METRICS API ----------
 @app.get("/model-metrics")
 def get_model_metrics():
