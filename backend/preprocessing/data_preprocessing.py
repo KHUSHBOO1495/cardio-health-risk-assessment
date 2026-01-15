@@ -8,6 +8,12 @@ from sklearn.preprocessing import StandardScaler
 def preprocess_data(path):
     # Load dataset (semicolon-separated)
     df = pd.read_csv(path, sep=";")
+    df.rename(columns={
+        "cholesterol": "chol",
+        "glucose": "gluc",
+        "sex": "gender"
+    }, inplace=True)
+    print("CSV COLUMNS:", df.columns.tolist())
 
     # Drop ID column if present
     if "id" in df.columns:
