@@ -5,9 +5,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
-def preprocess_data(path):
+def preprocess_data(path, sep=";"):
     # Load dataset (semicolon-separated)
-    df = pd.read_csv(path, sep=";")
+    df = pd.read_csv(path, sep=sep)
     df.rename(columns={
         "cholesterol": "chol",
         "glucose": "gluc",
