@@ -1,24 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { 
-  Brain, 
-  Award, 
-  BarChart3, 
-  Settings,
-  TrendingUp, 
-  TrendingDown, 
-  CheckCircle2, 
-  AlertTriangle,
-  Zap,
-  Database,
+import {
   Activity,
-  Calendar,
+  AlertTriangle,
+  Award,
+  BarChart3,
+  Brain,
+  CheckCircle2,
+  Database,
+  Grid3x3,
   Layers,
+  Settings,
   Target,
-  Grid3x3
+  TrendingDown,
+  TrendingUp,
+  Zap
 } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 export default function Models() {
@@ -26,6 +25,7 @@ export default function Models() {
   const [confusionMatrix, setConfusionMatrix] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     fetchMetrics();
@@ -34,7 +34,7 @@ export default function Models() {
 
   const fetchMetrics = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/model-metrics");
+      const response = await fetch(`${API_URL}/model-metrics`);
       if (!response.ok) throw new Error("Failed to fetch metrics");
       const data = await response.json();
       setMetrics(data);
@@ -45,7 +45,7 @@ export default function Models() {
 
   const fetchConfusionMatrix = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/confusion-matrix");
+      const response = await fetch(`${API_URL}/confusion-matrix`);
       if (!response.ok) throw new Error("Failed to fetch confusion matrix");
       const data = await response.json();
       setConfusionMatrix(data);

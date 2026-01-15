@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { Activity, AlertTriangle, FlaskConical, Heart, Lock, Ruler, Target, User, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Lock, AlertTriangle, User, Ruler, Heart, FlaskConical, Activity, ArrowLeft, Zap, Target } from "lucide-react";
+import { useState } from "react";
 import styles from "./page.module.css";
 
 export default function PatientForm() {
@@ -23,6 +22,7 @@ export default function PatientForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +62,7 @@ export default function PatientForm() {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/predict", {
+      const response = await fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

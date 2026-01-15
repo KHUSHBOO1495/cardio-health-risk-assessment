@@ -1,20 +1,24 @@
+import os
+
+import joblib
+import numpy as np
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-import numpy as np
-import joblib
-import os
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
-
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from models.risk_logic import classify_risk
 from preprocessing.data_preprocessing import preprocess_data
+from pydantic import BaseModel
+from sklearn.metrics import (confusion_matrix, f1_score, precision_score,
+                             recall_score)
 
 app = FastAPI()
 
 # ---------- CORS ----------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -31,9 +35,16 @@ scaler = joblib.load(
 )
 
 # Load test data for confusion matrix calculation
-_, X_test, _, y_test, _ = preprocess_data(
-    os.path.join(BASE_DIR, "data", "cardio_train.csv")
-)
+X_TEST = None
+Y_TEST = None
+def load_test_data():
+    global X_TEST, Y_TEST
+    if X_TEST is None or Y_TEST is None:
+        _, X_TEST, _, Y_TEST, _ = preprocess_data(
+            os.path.join(BASE_DIR, "data", "cardio_train.csv")
+        )
+    return X_TEST, Y_TEST
+
 
 # ---------- SCHEMA ----------
 class PatientData(BaseModel):
@@ -106,6 +117,7 @@ def get_model_metrics():
 # ---------- CONFUSION MATRIX API ----------
 @app.get("/confusion-matrix")
 def get_confusion_matrix():
+    X_test, y_test = load_test_data()
     # Get predictions on test set
     y_pred = model.predict(X_test)
     

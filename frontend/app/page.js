@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Award, BarChart3, Brain, Database, Github, Heart, Lightbulb, Linkedin, Lock, Mail, Target, Twitter, Zap } from "lucide-react";
 import Link from "next/link";
-import { Database, Target, Zap, Lock, Award, Brain, Gauge, BarChart3, Lightbulb, CheckCircle2, Heart, Activity, Twitter, Linkedin, Github, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     fetchMetrics();
@@ -16,7 +17,7 @@ export default function Dashboard() {
 
   const fetchMetrics = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/model-metrics");
+      const response = await fetch(`${API_URL}/model-metrics`);
       if (!response.ok) throw new Error("Failed to fetch metrics");
       const data = await response.json();
       setMetrics(data);
