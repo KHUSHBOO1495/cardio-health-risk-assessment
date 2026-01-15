@@ -1,6 +1,9 @@
+import os
+
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
 
 def preprocess_data(path):
     # Load dataset (semicolon-separated)
@@ -50,6 +53,24 @@ def preprocess_data(path):
         X_scaled, y, test_size=0.25, random_state=42
     )
 
+    # print(f"Final dataset size after preprocessing (with BMI): {df.shape[0]} rows")
+
+    # Save cleaned dataset
+    # cleaned_data_path = "../data/"
+    # df.to_csv(cleaned_data_path, index=False)
+    # print(f"Cleaned dataset saved to {cleaned_data_path}")
+
+    # return X_train, X_test, y_train, y_test, scaler
+
+
     print(f"Final dataset size after preprocessing (with BMI): {df.shape[0]} rows")
+
+    # Create directory if it doesn't exist
+    os.makedirs("./data", exist_ok=True)
+
+    # Save cleaned dataset
+    cleaned_data_path = "./data/cardio_train_cleaned.csv"
+    df.to_csv(cleaned_data_path, index=False)
+    print(f"Cleaned dataset saved to {cleaned_data_path}")
 
     return X_train, X_test, y_train, y_test, scaler

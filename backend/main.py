@@ -41,7 +41,7 @@ def load_test_data():
     global X_TEST, Y_TEST
     if X_TEST is None or Y_TEST is None:
         _, X_TEST, _, Y_TEST, _ = preprocess_data(
-            os.path.join(BASE_DIR, "data", "cardio_train.csv")
+            os.path.join(BASE_DIR, "data", "cardio_train_cleaned.csv")
         )
     return X_TEST, Y_TEST
 
