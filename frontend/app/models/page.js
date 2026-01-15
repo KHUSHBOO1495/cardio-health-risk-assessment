@@ -25,7 +25,7 @@ export default function Models() {
   const [confusionMatrix, setConfusionMatrix] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://cardio-health-risk-assessment.onrender.com";
 
   useEffect(() => {
     fetchMetrics();

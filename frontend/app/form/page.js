@@ -22,7 +22,7 @@ export default function PatientForm() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://cardio-health-risk-assessment.onrender.com";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
