@@ -40,8 +40,10 @@ Y_TEST = None
 def load_test_data():
     global X_TEST, Y_TEST
     if X_TEST is None or Y_TEST is None:
+        # Explicitly specify comma for cleaned CSV
         _, X_TEST, _, Y_TEST, _ = preprocess_data(
-            os.path.join(BASE_DIR, "data", "cardio_train_cleaned.csv")
+            os.path.join(BASE_DIR, "data", "cardio_train_cleaned.csv"),
+            sep=","
         )
     return X_TEST, Y_TEST
 
